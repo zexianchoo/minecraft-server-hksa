@@ -1,0 +1,23 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": ["config:recommended"],
+  "customManagers": [
+    {
+      "customType": "regex",
+      "fileMatch": ["^\\.build-ver$"],
+      "matchStrings": [
+        "datasource=custom.papermc depName=(?<depName>.*?)\\s+BUILD_URL=(?<currentValue>.*)"
+      ],
+      "datasourceTemplate": "custom.papermc",
+      "depNameTemplate": "paper"
+    }
+  ],
+  "customDatasources": {
+    "papermc": {
+      "defaultPlaceholderSourceUrl": "https://api.papermc.io/v2/projects/paper",
+      "transformTemplates": [
+        "{ \"releases\": [ { \"version\": \"https://api.papermc.io/v2/projects/paper/versions/{{$.versions[-1]}}/builds/latest/downloads/paper-{{$.versions[-1]}}-latest.jar\" } ] }"
+      ]
+    }
+  }
+}
