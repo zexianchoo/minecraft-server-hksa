@@ -1,10 +1,14 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  "extends": ["config:recommended"],
+  "extends": [
+    "config:recommended"
+  ],
   "packageRules": [
     {
       "description": "Auto-merge new PaperMC builds (safe), but NOT new Minecraft versions.",
-      "matchDepNames": ["paper"],
+      "matchDepNames": [
+        "paper"
+      ],
       "automerge": true
     }
   ],
@@ -12,7 +16,9 @@
     {
       "description": "1. Track the base Minecraft Version",
       "customType": "regex",
-      "fileMatch": ["^\\.build-ver$"],
+      "managerFilePatterns": [
+        "/^\\.build-ver$/"
+      ],
       "matchStrings": [
         "# minecraft-version=(?<currentValue>[\\d\\.]+)\\n.*\\nBUILD_URL=.*"
       ],
@@ -24,7 +30,9 @@
     {
       "description": "2. Track the Build Number for the current Minecraft Version",
       "customType": "regex",
-      "fileMatch": ["^\\.build-ver$"],
+      "managerFilePatterns": [
+        "/^\\.build-ver$/"
+      ],
       "matchStrings": [
         "#\\s*datasource=(?<datasource>custom\\.papermc)\\s+depName=(?<depName>\\S+)\\nBUILD_URL=https://api\\.papermc\\.io/v2/projects/paper/versions/(?<packageName>[\\d\\.]+)/builds/(?<currentValue>\\d+)/downloads/.*"
       ],
@@ -48,6 +56,4 @@
       ]
     }
   }
-
-  
 }
