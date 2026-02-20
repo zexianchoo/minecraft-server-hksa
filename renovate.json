@@ -16,7 +16,9 @@
     {
       "description": "1. Track the base Minecraft Version",
       "customType": "regex",
-      "fileMatch": ["^\\.build-ver$"],
+      "managerFilePatterns": [
+        "/^\\.build-ver$/"
+      ],
       "matchStrings": [
         "# minecraft-version=(?<currentValue>[\\d\\.]+)\\n.*\\nCUSTOM_SERVER=.*"
       ],
@@ -28,7 +30,9 @@
     {
       "description": "2. Track the Build Number for the current Minecraft Version",
       "customType": "regex",
-      "fileMatch": ["^\\.build-ver$"],
+      "managerFilePatterns": [
+        "/^\\.build-ver$/"
+      ],
       "matchStrings": [
         "#\\s*datasource=(?<datasource>custom\\.papermc)\\s+depName=(?<depName>\\S+)\\nCUSTOM_SERVER=https://api\\.papermc\\.io/v2/projects/paper/versions/(?<packageName>[\\d\\.]+)/builds/(?<currentValue>\\d+)/downloads/.*"
       ],
