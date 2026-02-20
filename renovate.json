@@ -16,27 +16,23 @@
     {
       "description": "1. Track the base Minecraft Version",
       "customType": "regex",
-      "managerFilePatterns": [
-        "/^\\.build-ver$/"
-      ],
+      "fileMatch": ["^\\.build-ver$"],
       "matchStrings": [
-        "# minecraft-version=(?<currentValue>[\\d\\.]+)\\n.*\\nBUILD_URL=.*"
+        "# minecraft-version=(?<currentValue>[\\d\\.]+)\\n.*\\nCUSTOM_SERVER=.*"
       ],
       "depNameTemplate": "paper-version",
       "datasourceTemplate": "custom.paper-version",
-      "autoReplaceStringTemplate": "# minecraft-version={{{newValue}}}\n# datasource=custom.papermc depName=paper\nBUILD_URL=https://api.papermc.io/v2/projects/paper/versions/{{{newValue}}}/builds/1/downloads/paper-{{{newValue}}}-1.jar",
+      "autoReplaceStringTemplate": "# minecraft-version={{{newValue}}}\n# datasource=custom.papermc depName=paper\nCUSTOM_SERVER=https://api.papermc.io/v2/projects/paper/versions/{{{newValue}}}/builds/1/downloads/paper-{{{newValue}}}-1.jar",
       "versioningTemplate": "loose"
     },
     {
       "description": "2. Track the Build Number for the current Minecraft Version",
       "customType": "regex",
-      "managerFilePatterns": [
-        "/^\\.build-ver$/"
-      ],
+      "fileMatch": ["^\\.build-ver$"],
       "matchStrings": [
-        "#\\s*datasource=(?<datasource>custom\\.papermc)\\s+depName=(?<depName>\\S+)\\nBUILD_URL=https://api\\.papermc\\.io/v2/projects/paper/versions/(?<packageName>[\\d\\.]+)/builds/(?<currentValue>\\d+)/downloads/.*"
+        "#\\s*datasource=(?<datasource>custom\\.papermc)\\s+depName=(?<depName>\\S+)\\nCUSTOM_SERVER=https://api\\.papermc\\.io/v2/projects/paper/versions/(?<packageName>[\\d\\.]+)/builds/(?<currentValue>\\d+)/downloads/.*"
       ],
-      "autoReplaceStringTemplate": "# datasource={{{datasource}}} depName={{{depName}}}\nBUILD_URL=https://api.papermc.io/v2/projects/paper/versions/{{{packageName}}}/builds/{{{newValue}}}/downloads/paper-{{{packageName}}}-{{{newValue}}}.jar",
+      "autoReplaceStringTemplate": "# datasource={{{datasource}}} depName={{{depName}}}\nCUSTOM_SERVER=https://api.papermc.io/v2/projects/paper/versions/{{{packageName}}}/builds/{{{newValue}}}/downloads/paper-{{{packageName}}}-{{{newValue}}}.jar",
       "versioningTemplate": "loose"
     }
   ],
