@@ -1,7 +1,9 @@
 #!/bin/bash
+cd "$(dirname "$0")"
+
 source .build-ver
 OLD_URL=$BUILD_URL
-
+echo OLD_URL $OLD_URL 
 git fetch
 
 if [ $(git rev-parse HEAD) != $(git rev-parse @{u}) ]; then
@@ -9,7 +11,9 @@ if [ $(git rev-parse HEAD) != $(git rev-parse @{u}) ]; then
     git pull
     source .build-ver
     NEW_URL=$BUILD_URL
-    if [ "$OLD_URL" != "$NEW_URL" ]; then
+    echo NEW_URL $NEW_URL
+
+    if [ "${OLD_URL}" != "${NEW_URL}" ]; then
 
         HTTP_STATUS=$(curl -o /dev/null -s -w "%{http_code}" -I -L \
             -H "User-Agent: MinecraftUpdater/1.0" \
