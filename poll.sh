@@ -2,8 +2,8 @@
 git fetch
 
 if [ $(git rev-parse HEAD) != $(git rev-parse @{u}) ]; then
-    bash make_backup
+    bash make_backup.sh
     git pull
-    docker compose up -d
+    gadocker compose up -d
     echo "Minecraft updated to latest Paper build at $(date)"
 fi
