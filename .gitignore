@@ -1,3 +1,4 @@
 .env
 minecraft-data
 docker-compose.yml
+mcbackup*
