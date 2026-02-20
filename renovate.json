@@ -6,17 +6,18 @@
       "customType": "regex",
       "fileMatch": ["^\\.build-ver$"],
       "matchStrings": [
-        "datasource=custom.papermc depName=(?<depName>.*?)\\s+BUILD_URL=(?<currentValue>.*)"
+        "datasource=(?<datasource>custom\\.papermc)\\s+depName=(?<depName>\\S+)\\s+BUILD_URL=https://api\\.papermc\\.io/v2/projects/paper/versions/(?<packageName>[^/]+)/builds/(?<currentValue>\\d+)/downloads/\\S+"
       ],
-      "datasourceTemplate": "custom.papermc",
-      "depNameTemplate": "paper"
+      "autoReplaceStringTemplate": "datasource={{{datasource}}} depName={{{depName}}}\nBUILD_URL=https://api.papermc.io/v2/projects/paper/versions/{{{packageName}}}/builds/{{{newValue}}}/downloads/paper-{{{packageName}}}-{{{newValue}}}.jar",
+      "versioningTemplate": "loose"
     }
   ],
   "customDatasources": {
     "papermc": {
-      "defaultPlaceholderSourceUrl": "https://api.papermc.io/v2/projects/paper",
+      "defaultRegistryUrlTemplate": "https://api.papermc.io/v2/projects/paper/versions/{{packageName}}",
+      "format": "json",
       "transformTemplates": [
-        "{ \"releases\": [ { \"version\": \"https://api.papermc.io/v2/projects/paper/versions/{{$.versions[-1]}}/builds/latest/downloads/paper-{{$.versions[-1]}}-latest.jar\" } ] }"
+        "{ \"releases\": builds.{ \"version\": $string($) } }"
       ]
     }
   }
