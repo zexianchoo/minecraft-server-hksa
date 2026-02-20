@@ -7,7 +7,6 @@ echo OLD_URL $OLD_URL
 git fetch
 
 if [ $(git rev-parse HEAD) != $(git rev-parse @{u}) ]; then
-    bash make_backup.sh
     git pull
     source .build-ver
     NEW_URL=$BUILD_URL
