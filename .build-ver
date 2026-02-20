@@ -1,2 +1,3 @@
-# renovate: datasource=custom.papermc depName=paper
+# minecraft-version=1.21.1
+# datasource=custom.papermc depName=paper
 BUILD_URL=https://api.papermc.io/v2/projects/paper/versions/1.21.1/builds/117/downloads/paper-1.21.1-117.jar

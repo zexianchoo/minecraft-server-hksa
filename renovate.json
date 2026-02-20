@@ -1,18 +1,45 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": ["config:recommended"],
+  "packageRules": [
+    {
+      "description": "Auto-merge new PaperMC builds (safe), but NOT new Minecraft versions.",
+      "matchDepNames": ["paper"],
+      "automerge": true
+    }
+  ],
   "customManagers": [
     {
+      "description": "1. Track the base Minecraft Version",
       "customType": "regex",
       "fileMatch": ["^\\.build-ver$"],
       "matchStrings": [
-        "datasource=(?<datasource>custom\\.papermc)\\s+depName=(?<depName>\\S+)\\s+BUILD_URL=https://api\\.papermc\\.io/v2/projects/paper/versions/(?<packageName>[^/]+)/builds/(?<currentValue>\\d+)/downloads/\\S+"
+        "# minecraft-version=(?<currentValue>[\\d\\.]+)\\n.*\\nBUILD_URL=.*"
       ],
-      "autoReplaceStringTemplate": "datasource={{{datasource}}} depName={{{depName}}}\nBUILD_URL=https://api.papermc.io/v2/projects/paper/versions/{{{packageName}}}/builds/{{{newValue}}}/downloads/paper-{{{packageName}}}-{{{newValue}}}.jar",
+      "depNameTemplate": "paper-version",
+      "datasourceTemplate": "custom.paper-version",
+      "autoReplaceStringTemplate": "# minecraft-version={{{newValue}}}\n# datasource=custom.papermc depName=paper\nBUILD_URL=https://api.papermc.io/v2/projects/paper/versions/{{{newValue}}}/builds/1/downloads/paper-{{{newValue}}}-1.jar",
+      "versioningTemplate": "loose"
+    },
+    {
+      "description": "2. Track the Build Number for the current Minecraft Version",
+      "customType": "regex",
+      "fileMatch": ["^\\.build-ver$"],
+      "matchStrings": [
+        "#\\s*datasource=(?<datasource>custom\\.papermc)\\s+depName=(?<depName>\\S+)\\nBUILD_URL=https://api\\.papermc\\.io/v2/projects/paper/versions/(?<packageName>[\\d\\.]+)/builds/(?<currentValue>\\d+)/downloads/.*"
+      ],
+      "autoReplaceStringTemplate": "# datasource={{{datasource}}} depName={{{depName}}}\nBUILD_URL=https://api.papermc.io/v2/projects/paper/versions/{{{packageName}}}/builds/{{{newValue}}}/downloads/paper-{{{packageName}}}-{{{newValue}}}.jar",
       "versioningTemplate": "loose"
     }
   ],
   "customDatasources": {
+    "paper-version": {
+      "defaultRegistryUrlTemplate": "https://api.papermc.io/v2/projects/paper",
+      "format": "json",
+      "transformTemplates": [
+        "{ \"releases\": versions.{ \"version\": $ } }"
+      ]
+    },
     "papermc": {
       "defaultRegistryUrlTemplate": "https://api.papermc.io/v2/projects/paper/versions/{{packageName}}",
       "format": "json",
